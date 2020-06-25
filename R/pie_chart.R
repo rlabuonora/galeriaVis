@@ -14,6 +14,25 @@
 #' @export
 #'
 #' @examples
+#'
+#'
+#'
+
+
+
+
+etiqueta_pie_chart <- function(df, values, labels) {
+
+  val <- rlang::enquo(values)
+  lbls <- rlang::enquo(labels)
+  dplyr::mutate(df,
+                lbls = !!lbls,
+                percent = scales::percent(!!val / sum(!!val), decimal.mark = ','),
+                val_num = scales::number(!!val, big.mark = ".", decimal.mark = ','),
+                lbl = glue::glue("{lbls}\n{val_num}\n{percent}"))
+}
+
+
 pie_chart <- function(df, values, labels,
                         nudge_radio = .7,
                         nudge_x = 0,
@@ -38,10 +57,10 @@ pie_chart <- function(df, values, labels,
 
   p <- df %>%
     tibble::add_column(nudge_radio=nudge_radio, nudge_x=nudge_x, nudge_y=nudge_y) %>%
-    # etiqueta_pie_chart(!!val, !!labs) %>%
+    etiqueta_pie_chart(!!val, !!labs) %>%
     dplyr::mutate(total = sum(!!val),
            end_angle = 2*pi*cumsum(!!val) / total,
-           start_angle = lag(end_angle, default = 0),
+           start_angle = dplyr::lag(end_angle, default = 0),
            mid_angle = (end_angle + start_angle) / 2) %>%
     ggplot2::ggplot() +
     ggforce::geom_arc_bar(ggplot2::aes(x0 = 0, y0 = 0,
@@ -69,9 +88,6 @@ pie_chart <- function(df, values, labels,
     ggplot2::scale_color_manual(name = lab_char,
                        values = unname(paleta_cats[1:n])
     ) +
-    ggplot2::theme(
-      legend.position = "none"
-    ) +
     ggplot2::geom_text(ggplot2::aes(label = lbl,
                   x = 10 * nudge_radio * sin(mid_angle) + nudge_x,
                   y = 10 * nudge_radio * cos(mid_angle) + nudge_y),
@@ -83,6 +99,7 @@ pie_chart <- function(df, values, labels,
           axis.title = ggplot2::element_text(size = ggplot2::rel(1.5)),
           axis.text = ggplot2::element_text(size = ggplot2::rel(1.5)),
           axis.line.x = ggplot2::element_blank(),
-          axis.ticks = ggplot2::element_blank())
+          axis.ticks = ggplot2::element_blank(),
+          legend.position = "none")
 
 }
