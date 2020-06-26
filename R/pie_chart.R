@@ -18,8 +18,20 @@
 #'
 #'
 
+# Helpers ------
+
+paleta_cats <- c(
+  "azul" = "#80b1d3",
+  "rojo" = "#fb8072",
+  "verde" = "#8dd3c7",
+  "violeta" = "#decbe4",
+  "naranja" = "#fed9a6",
+  "amarillo" = "#ffffcc"
+)
 
 
+
+# Helper para armar las etiquetas (Devuelve df con columna lbl) ---------
 
 etiqueta_pie_chart <- function(df, values, labels) {
 
@@ -33,6 +45,7 @@ etiqueta_pie_chart <- function(df, values, labels) {
 }
 
 
+# Hacer el plot --------
 pie_chart <- function(df, values, labels,
                         nudge_radio = .7,
                         nudge_x = 0,
@@ -44,16 +57,6 @@ pie_chart <- function(df, values, labels,
   lab_char <- stringr::str_to_title(as.character(labs)[2])
 
   n <- nrow(df)
-
-  paleta_cats <- c(
-    "azul" = "#80b1d3",
-    "rojo" = "#fb8072",
-    "verde" = "#8dd3c7",
-    "violeta" = "#decbe4",
-    "naranja" = "#fed9a6",
-    "amarillo" = "#ffffcc"
-  )
-
 
   p <- df %>%
     tibble::add_column(nudge_radio=nudge_radio, nudge_x=nudge_x, nudge_y=nudge_y) %>%
