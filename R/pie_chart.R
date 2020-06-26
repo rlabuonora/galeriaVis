@@ -1,22 +1,5 @@
 
-#' Make pie chart
-#'
-#' Crear grafico de tortas
-#'
-#' @param df data_frame
-#' @param values variable a graficar
-#' @param labels variable para agrupar
-#' @param nudge_radio distancia del centro para las etiquetas
-#' @param nudge_x vector para mover las  etiquetas en eje x
-#' @param nudge_y vector para mover las etiquetas en eje  y
-#'
-#' @return
-#' @export
-#'
-#' @examples
-#'
-#'
-#'
+
 
 # Helpers ------
 
@@ -45,7 +28,25 @@ etiqueta_pie_chart <- function(df, values, labels) {
 }
 
 
-# Hacer el plot --------
+#' Make pie chart
+#'
+#' Crear grafico de tortas
+#'
+#' @param df data_frame
+#' @param values variable a graficar
+#' @param labels variable para agrupar
+#' @param nudge_radio distancia del centro para las etiquetas
+#' @param nudge_x vector para mover las  etiquetas en eje x
+#' @param nudge_y vector para mover las etiquetas en eje  y
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#'
+#'
+#'
+
 pie_chart <- function(df, values, labels,
                         nudge_radio = .7,
                         nudge_x = 0,

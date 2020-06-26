@@ -1,14 +1,6 @@
 
 
-#' Serie Histórica
-#'
-#' @return
-#' @export
-#'
-#' @examples
-#'
-#'
-#'
+
 
 formato_numero <- scales::number_format(big.mark=".", decimal.mark = ",")
 pal <- RColorBrewer::brewer.pal(n = 8, name = "Blues")
@@ -18,6 +10,16 @@ year_label <- function(x) {
   lubridate::year(y)
 }
 
+
+#' Serie Hist&oacute;rica
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#'
+#'
+#'
 
 serie_historica <- function(df, valor, fecha, nudge_text=0, size_text=5)  {
 
