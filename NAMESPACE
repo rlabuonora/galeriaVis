@@ -3,3 +3,4 @@
 export(barras_horizontales)
 export(pie_chart)
 export(serie_historica)
+export(serie_historica_anual)
