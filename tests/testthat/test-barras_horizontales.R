@@ -23,9 +23,11 @@ test_that("Grafico 10", {
     "Treinta y Tres",   12928
   )
 
-  p <- barras_horizontales(lineas, depto, nudge_text = 5e4)
+  p <- barras_horizontales(df, lineas, depto, nudge_text = 5e4)
   expect_true(ggplot2::is.ggplot(p))
   expect_true("GeomCol" %in% class(p$layers[[1]]$geom))
   expect_true("GeomText" %in% class(p$layers[[2]]$geom))
+  expect_error(print(p), NA)
+
 
 })

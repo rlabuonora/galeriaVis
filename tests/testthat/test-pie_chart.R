@@ -7,6 +7,7 @@ test_that("simple pie chart", {
          class = c("tbl_df", "tbl", "data.frame"))
 
   p <- pie_chart(serie,  minutos, empresa)
+  expect_error(print(p), NA)
   expect_true(ggplot2::is.ggplot(p))
   expect_true("GeomArcBar" %in% class(p$layers[[1]]$geom))
   expect_true("GeomText" %in% class(p$layers[[2]]$geom))
