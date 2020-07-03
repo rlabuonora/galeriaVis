@@ -36,3 +36,43 @@ test_that("serie_historica_anual", {
   expect_true("GeomCol" %in% class(p$layers[[1]]$geom))
   expect_true("GeomText" %in% class(p$layers[[2]]$geom))
 })
+
+test_that("serie_historica_mensual", {
+
+  serie <- tibble::tribble(
+    ~trafico, ~year, ~month,
+    96437,  2018,      1,
+    93333,  2018,      2,
+    101713,  2018,      3,
+    101240,  2018,      4,
+    109307,  2018,      5,
+    108967,  2018,      6,
+    112982,  2018,      7,
+    115621,  2018,      8,
+    115825,  2018,      9,
+    114350,  2018,     10,
+    114150,  2018,     11,
+    111965,  2018,     12,
+    120039,  2019,      1,
+    118777,  2019,      2,
+    111572,  2019,      3,
+    126237,  2019,      4,
+    134348,  2019,      5,
+    142193,  2019,      6,
+    150576,  2019,      7,
+    151067,  2019,      8,
+    146393,  2019,      9,
+    155685,  2019,     10,
+    143900,  2019,     11,
+    155142,  2019,     12
+  )
+
+  p <- serie %>%
+    dplyr::filter(year > 2018) %>%
+    serie_historica_mensual(trafico, nudge_text=1e4)
+
+  expect_true(ggplot2::is.ggplot(p))
+  expect_error(print(p), NA)
+  expect_true("GeomCol" %in% class(p$layers[[1]]$geom))
+  expect_true("GeomText" %in% class(p$layers[[2]]$geom))
+})
