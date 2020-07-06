@@ -76,3 +76,24 @@ test_that("serie_historica_mensual", {
   expect_true("GeomCol" %in% class(p$layers[[1]]$geom))
   expect_true("GeomText" %in% class(p$layers[[2]]$geom))
 })
+
+test_that("serie_historica_mensual", {
+
+  serie_141 <- tibble::tribble(
+    ~year, ~semester,         ~val,
+    2018,        1L, 46086.143989,
+    2018,        2L, 49289.962109,
+    2019,        1L,  55041.09139,
+    2019,        2L, 58874.316042
+  )
+
+  p <-  serie_141 %>%
+    serie_historica_semestral(val, nudge_text=4e3)
+
+  expect_true(ggplot2::is.ggplot(p))
+  expect_error(print(p), NA)
+  expect_true("GeomCol" %in% class(p$layers[[1]]$geom))
+  expect_true("GeomText" %in% class(p$layers[[2]]$geom))
+})
+
+
