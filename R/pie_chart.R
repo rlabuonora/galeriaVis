@@ -100,8 +100,8 @@ pie_chart <- function(df, values, labels,
     ggplot2::theme_minimal() +
     ggplot2::theme(plot.background = ggplot2::element_rect(fill = "#EEEEEE",
                                          color = "white"),
-          axis.title = ggplot2::element_text(size = ggplot2::rel(1.5)),
-          axis.text = ggplot2::element_text(size = ggplot2::rel(1.5)),
+         # axis.title = ggplot2::element_text(size = ggplot2::rel(1.5)),
+        #  axis.text = ggplot2::element_text(size = ggplot2::rel(1.5)),
           axis.line.x = ggplot2::element_blank(),
           axis.ticks = ggplot2::element_blank(),
           legend.position = "none")

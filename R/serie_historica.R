@@ -29,7 +29,7 @@ serie_historica <- function(df, valor, fecha, nudge_text=0, size_text=5)  {
   ggplot2::ggplot(df, ggplot2::aes(factor(!! fecha_quo), !! valor_quo)) +
     ggplot2::geom_col(fill = pal[5], width = 0.5) +
     ggplot2::geom_text(ggplot2::aes(label=formato_numero(!!valor_quo)),
-                       size=ggplot2::rel(size_text),
+                      # size=ggplot2::rel(size_text),
                        nudge_y = nudge_text) +
     ggplot2::scale_x_discrete(labels = year_label,
                               expand = ggplot2::expand_scale(add = c(0.5, 0.5),
@@ -60,7 +60,7 @@ serie_historica_anual <- function(df, valor, nudge_text=0, size_text=5) {
     ggplot2::ggplot(ggplot2::aes(factor(lbl), !! valor_quo)) +
     ggplot2::geom_col(fill = pal[5], width = 0.25) +
     ggplot2::geom_text(ggplot2::aes(label=formato_numero(!!valor_quo)),
-              size=ggplot2::rel(size_text),
+            #  size=ggplot2::rel(size_text),
               nudge_y = nudge_text) +
     ggplot2::scale_x_discrete(expand = ggplot2::expand_scale(add = c(0.5, 0.5),
                                            mult = c(0, 0))) +
@@ -93,7 +93,7 @@ serie_historica_mensual <- function(df, valor,  nudge_text=0, size_text=5, col_w
     ggplot2::ggplot(ggplot2::aes(factor(lbl), !! valor_quo)) +
     ggplot2::geom_col(fill = pal[5], width = col_width) +
     ggplot2::geom_text(ggplot2::aes(label=formato_numero(!!valor_quo)),
-              size=ggplot2::rel(size_text),
+            #  size=ggplot2::rel(size_text),
               nudge_y = nudge_text) +
     ggplot2::scale_x_discrete(expand = ggplot2::expand_scale(add = c(0.5, 0.5),
                                            mult = c(0, 0))) +
@@ -103,6 +103,17 @@ serie_historica_mensual <- function(df, valor,  nudge_text=0, size_text=5, col_w
     ggplot2::theme(axis.text.x = ggplot2::element_text(size = 14))
 }
 
+#' Title
+#'
+#' @param df
+#' @param valor
+#' @param nudge_text
+#' @param size_text
+#'
+#' @return
+#' @export
+#'
+#' @examples
 serie_historica_semestral <- function(df, valor, nudge_text=0, size_text=5) {
 
   valor_quo <- rlang::enquo(valor)
@@ -113,7 +124,7 @@ serie_historica_semestral <- function(df, valor, nudge_text=0, size_text=5) {
     ggplot2::ggplot(ggplot2::aes(factor(lbl), !! valor_quo)) +
     ggplot2::geom_col(fill = pal[5], width = 0.5) +
     ggplot2::geom_text(ggplot2::aes(label=formato_numero(!!valor_quo)),
-              size=ggplot2::rel(size_text),
+           #   size=ggplot2::rel(size_text),
               nudge_y = nudge_text) +
     ggplot2::scale_x_discrete(expand = ggplot2::expand_scale(add = c(0.5, 0.5),
                                            mult = c(0, 0))) +
