@@ -2,7 +2,9 @@
 
 
 
-formato_numero <- scales::number_format(big.mark=".", decimal.mark = ",")
+formato_numero <- scales::number_format(big.mark=".",
+                                        accuracy = 1,
+                                        decimal.mark = ",")
 pal <- RColorBrewer::brewer.pal(n = 8, name = "Blues")
 
 year_label <- function(x) {
@@ -118,14 +120,14 @@ serie_historica_semestral <- function(df, valor, nudge_text=0, size_text=5) {
 
   df %>%
     dplyr::ungroup() %>%
-    dplyr::mutate(lbl = forcats::fct_inorder(glue::glue("{semester} Sem.\n{year}"))) %>%
+    dplyr::mutate(lbl = forcats::fct_inorder(glue::glue("{year}\n{as.roman(semester)}"))) %>%
     ggplot2::ggplot(ggplot2::aes(factor(lbl), !! valor_quo)) +
-    ggplot2::geom_col(fill = pal[5], width = 0.5) +
+    ggplot2::geom_col(fill = pal[5]) +
     ggplot2::geom_text(ggplot2::aes(label=formato_numero(!!valor_quo)),
               nudge_y = nudge_text) +
-    ggplot2::scale_x_discrete(expand = ggplot2::expand_scale(add = c(0.5, 0.5),
-                                           mult = c(0, 0))) +
-    ggplot2::scale_y_continuous(breaks = NULL) +
+    ggplot2::scale_x_discrete(expand = ggplot2::expansion(0, 0)) +
+    ggplot2::scale_y_continuous(breaks = NULL,
+                                expand = ggplot2::expansion(.05, 0)) +
     ggplot2::geom_hline(yintercept = 0) +
     ggplot2::labs(x="", y="")
 }
