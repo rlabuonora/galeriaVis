@@ -99,8 +99,7 @@ serie_historica_mensual <- function(df, valor,  nudge_text=0, size_text=5, col_w
                                            mult = c(0, 0))) +
     ggplot2::scale_y_continuous(breaks = NULL) +
     ggplot2::geom_hline(yintercept = 0) +
-    ggplot2::labs(x="", y="") +
-    ggplot2::theme(axis.text.x = ggplot2::element_text(size = 14))
+    ggplot2::labs(x="", y="")
 }
 
 #' Title
