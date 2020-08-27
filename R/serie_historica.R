@@ -102,34 +102,7 @@ serie_historica_mensual <- function(df, valor,  nudge_text=0, size_text=5, col_w
     ggplot2::labs(x="", y="")
 }
 
-#' Title
-#'
-#' @param df
-#' @param valor
-#' @param nudge_text
-#' @param size_text
-#'
-#' @return
-#' @export
-#'
-#' @examples
-serie_historica_semestral <- function(df, valor, nudge_text=0, size_text=5) {
 
-  valor_quo <- rlang::enquo(valor)
-
-  df %>%
-    dplyr::ungroup() %>%
-    dplyr::mutate(lbl = forcats::fct_inorder(glue::glue("{year}\n{as.roman(semester)}"))) %>%
-    ggplot2::ggplot(ggplot2::aes(factor(lbl), !! valor_quo)) +
-    ggplot2::geom_col(fill = pal[5]) +
-    ggplot2::geom_text(ggplot2::aes(label=formato_numero(!!valor_quo)),
-              nudge_y = nudge_text) +
-    ggplot2::scale_x_discrete(expand = ggplot2::expansion(0, 0)) +
-    ggplot2::scale_y_continuous(breaks = NULL,
-                                expand = ggplot2::expansion(.05, 0)) +
-    ggplot2::geom_hline(yintercept = 0) +
-    ggplot2::labs(x="", y="")
-}
 
 serie_historica_semestral_flujo <- function(df, valor, nudge_text=0, size_text=5) {
 
