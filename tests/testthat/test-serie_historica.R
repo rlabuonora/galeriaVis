@@ -77,7 +77,7 @@ test_that("serie_historica_mensual", {
   expect_true("GeomText" %in% class(p$layers[[2]]$geom))
 })
 
-test_that("serie_historica_semestral", {
+test_that("serie_historica_semestral_flujo", {
 
   serie_141 <- data.frame(
     year = c(2011,2011,2012,2012,2013,2013,2014,
@@ -90,13 +90,54 @@ test_that("serie_historica_semestral", {
   )
 
   p <-  serie_141 %>%
-    mutate(lineas = lineas / 1e3) %>%
-    serie_historica_semestral(lineas, nudge_text=4e1)
+    dplyr::mutate(lineas = lineas / 1e3) %>%
+    serie_historica_semestral_flujo(lineas, nudge_text=4e1)
 
   expect_true(ggplot2::is.ggplot(p))
   expect_error(print(p), NA)
   expect_true("GeomCol" %in% class(p$layers[[1]]$geom))
   expect_true("GeomText" %in% class(p$layers[[2]]$geom))
+
+  etiquetas <- ggplot2::ggplot_build(p)$layout$panel_scales_x[[1]]$range$range
+
+  expect_equal("2011\nI", etiquetas[[1]])
+  expect_equal("2011\nII", etiquetas[[2]])
+
+
+})
+
+
+test_that("serie_historica_semestral_stock ", {
+
+  serie_141 <- data.frame(
+    year = c(2011,2011,2012,2012,2013,2013,2014,
+             2014,2015,2015,2016,2016,2017,2017,2018,2018,2019,2019),
+    semester = c(1L,2L,1L,2L,1L,2L,1L,2L,1L,2L,1L,
+                 2L,1L,2L,1L,2L,1L,2L),
+    lineas = c(964859,979923,1010803,1010953,1029629,
+               1048445,1059309,1082903,1096565,1106431,1112235,1113566,
+               1120072,1136977,1149210,1153533,1164984,1165373)
+  )
+
+  p <-  serie_141 %>%
+    dplyr::mutate(lineas = lineas / 1e3) %>%
+    serie_historica_semestral_stock(lineas, nudge_text=4e1)
+
+  expect_true(ggplot2::is.ggplot(p))
+  expect_error(print(p), NA)
+  expect_true("GeomCol" %in% class(p$layers[[1]]$geom))
+  expect_true("GeomText" %in% class(p$layers[[2]]$geom))
+
+
+  etiquetas <- ggplot2::ggplot_build(p)$layout$panel_scales_x[[1]]$range$range
+
+  expect_equal("2011\nEnero", etiquetas[[1]])
+
+  expect_equal("2011\nJunio", etiquetas[[2]])
+
+
+
+
 })
 
 
