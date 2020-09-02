@@ -131,9 +131,9 @@ test_that("serie_historica_semestral_stock ", {
 
   etiquetas <- ggplot2::ggplot_build(p)$layout$panel_scales_x[[1]]$range$range
 
-  expect_equal("2011\nEnero", etiquetas[[1]])
+  expect_equal("6-2011", etiquetas[[1]])
 
-  expect_equal("2011\nJunio", etiquetas[[2]])
+  expect_equal("12-2011", etiquetas[[2]])
 
 
 
