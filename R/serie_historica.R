@@ -57,6 +57,9 @@ serie_historica_anual <- function(df, valor, nudge_text=0, size_text=5) {
 
   valor_quo <- rlang::enquo(valor)
 
+  valores <- dplyr::pull(df, !! valor_quo)
+  auto_nudge <- max(valores) * 0.08
+
   df %>%
     dplyr::mutate(lbl = forcats::fct_inorder(factor(year))) %>%
     ggplot2::ggplot(ggplot2::aes(factor(lbl), !! valor_quo)) +
@@ -87,6 +90,9 @@ serie_historica_anual <- function(df, valor, nudge_text=0, size_text=5) {
 serie_historica_mensual <- function(df, valor,  nudge_text=0, size_text=5, col_width=0.5) {
 
   valor_quo <- rlang::enquo(valor)
+
+  valores <- dplyr::pull(df, !! valor_quo)
+  auto_nudge <- max(valores) * 0.08
 
   df %>%
     dplyr::ungroup() %>%
@@ -120,6 +126,9 @@ serie_historica_semestral_flujo <- function(df, valor, nudge_text=0, size_text=5
 
   valor_quo <- rlang::enquo(valor)
 
+  valores <- dplyr::pull(df, !! valor_quo)
+  auto_nudge <- max(valores) * 0.08
+
   df %>%
     dplyr::ungroup() %>%
     dplyr::mutate(lbl = forcats::fct_inorder(glue::glue("{year}\n{as.roman(semester)}"))) %>%
@@ -152,6 +161,10 @@ serie_historica_semestral_stock <- function(df, valor, nudge_text=0, size_text=5
 
   valor_quo <- rlang::enquo(valor)
 
+  # Auto nudge
+  valores <- dplyr::pull(df, !! valor_quo)
+  auto_nudge <- max(valores) * 0.08
+
   df %>%
     dplyr::ungroup() %>%
     dplyr::mutate(semester_month = dplyr::if_else(semester == 1, "6", "12")) %>%
@@ -159,7 +172,7 @@ serie_historica_semestral_stock <- function(df, valor, nudge_text=0, size_text=5
     ggplot2::ggplot(ggplot2::aes(factor(lbl), !! valor_quo)) +
     ggplot2::geom_col(fill = pal[5]) +
     ggplot2::geom_text(ggplot2::aes(label=formato_numero(!!valor_quo)),
-                       nudge_y = nudge_text) +
+                       nudge_y = auto_nudge) +
     ggplot2::scale_x_discrete(expand = ggplot2::expansion(0, 0)) +
     ggplot2::scale_y_continuous(breaks = NULL,
                                 expand = ggplot2::expansion(.05, 0)) +
