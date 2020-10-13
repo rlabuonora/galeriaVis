@@ -28,11 +28,14 @@ serie_historica <- function(df, valor, fecha, nudge_text=0, size_text=5)  {
   valor_quo <- rlang::enquo(valor)
   fecha_quo <- rlang::enquo(fecha)
 
+  valores <- dplyr::pull(df, !! valor_quo)
+  auto_nudge <- max(valores) * 0.08
+
   ggplot2::ggplot(df, ggplot2::aes(factor(!! fecha_quo), !! valor_quo)) +
     ggplot2::geom_col(fill = pal[5], width = 0.5) +
     ggplot2::geom_text(ggplot2::aes(label=formato_numero(!!valor_quo)),
                       # size=ggplot2::rel(size_text),
-                       nudge_y = nudge_text) +
+                       nudge_y = auto_nudge) +
     ggplot2::scale_x_discrete(labels = year_label,
                               expand = ggplot2::expand_scale(add = c(0.5, 0.5),
                                                     mult = c(0, 0))) +
@@ -65,7 +68,7 @@ serie_historica_anual <- function(df, valor, nudge_text=0, size_text=5) {
     ggplot2::ggplot(ggplot2::aes(factor(lbl), !! valor_quo)) +
     ggplot2::geom_col(fill = pal[5], width = 0.25) +
     ggplot2::geom_text(ggplot2::aes(label=formato_numero(!!valor_quo)),
-              nudge_y = nudge_text) +
+              nudge_y = auto_nudge) +
     ggplot2::scale_x_discrete(expand = ggplot2::expand_scale(add = c(0.5, 0.5),
                                            mult = c(0, 0))) +
     ggplot2::scale_y_continuous(breaks = NULL) +
@@ -100,7 +103,7 @@ serie_historica_mensual <- function(df, valor,  nudge_text=0, size_text=5, col_w
     ggplot2::ggplot(ggplot2::aes(factor(lbl), !! valor_quo)) +
     ggplot2::geom_col(fill = pal[5], width = col_width) +
     ggplot2::geom_text(ggplot2::aes(label=formato_numero(!!valor_quo)),
-              nudge_y = nudge_text) +
+              nudge_y = auto_nudge) +
     ggplot2::scale_x_discrete(expand = ggplot2::expand_scale(add = c(0.5, 0.5),
                                            mult = c(0, 0))) +
     ggplot2::scale_y_continuous(breaks = NULL) +
@@ -135,7 +138,7 @@ serie_historica_semestral_flujo <- function(df, valor, nudge_text=0, size_text=5
     ggplot2::ggplot(ggplot2::aes(factor(lbl), !! valor_quo)) +
     ggplot2::geom_col(fill = pal[5]) +
     ggplot2::geom_text(ggplot2::aes(label=formato_numero(!!valor_quo)),
-                       nudge_y = nudge_text) +
+                       nudge_y = auto_nudge) +
     ggplot2::scale_x_discrete(expand = ggplot2::expansion(0, 0)) +
     ggplot2::scale_y_continuous(breaks = NULL,
                                 expand = ggplot2::expansion(.05, 0)) +
