@@ -12,3 +12,16 @@ test_that("simple pie chart", {
   expect_true("GeomArcBar" %in% class(p$layers[[1]]$geom))
   expect_true("GeomText" %in% class(p$layers[[2]]$geom))
 })
+
+test_that("number formats", {
+
+  p <- tibble::tribble(
+    ~empresa, ~radiobases,
+    "Antel",        2385,
+    "Claro",        409,
+    "Movistar",     591
+  ) %>%
+  pie_chart(radiobases, empresa, percent_accuracy=.01) %>%
+  print
+
+})

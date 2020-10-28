@@ -4,7 +4,15 @@
 \alias{pie_chart}
 \title{Make pie chart}
 \usage{
-pie_chart(df, values, labels, nudge_radio = 0.7, nudge_x = 0, nudge_y = 0)
+pie_chart(
+  df,
+  values,
+  labels,
+  nudge_radio = 0.7,
+  nudge_x = 0,
+  nudge_y = 0,
+  percent_accuracy = 0.1
+)
 }
 \arguments{
 \item{df}{data_frame}
