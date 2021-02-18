@@ -1,3 +1,16 @@
+test_that("data frame vacío", {
+
+  df <- tibble::tribble(
+    ~depto, ~lineas
+  )
+
+  p <- barras_horizontales(df, lineas, depto, nudge_text = 5e4)
+  expect_true(ggplot2::is.ggplot(p))
+  #expect_true("GeomCol" %in% class(p$layers[[1]]$geom))
+  expect_error(print(p), NA)
+})
+
+
 test_that("Grafico 10", {
 
   df <- tibble::tribble(

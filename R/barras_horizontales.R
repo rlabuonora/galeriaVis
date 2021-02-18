@@ -11,6 +11,10 @@
 #'
 #' @examples
 barras_horizontales <- function(df, valor, cat, nudge_text=0, espacio_extra=0.15) {
+
+  if (nrow(df) == 0) {
+    return(ggplot2::ggplot())
+  }
   valor_quo <- rlang::enquo(valor)
   cat_quo <- rlang::enquo(cat)
 
