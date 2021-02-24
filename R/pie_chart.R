@@ -53,6 +53,10 @@ pie_chart <- function(df, values, labels,
                         nudge_y = 0
 ) {
 
+  if (nrow(df) == 0) {
+    return(ggplot2::ggplot())
+  }
+
   val <- rlang::enquo(values)
   labs <- rlang::enquo(labels)
   lab_char <- stringr::str_to_title(as.character(labs)[2])

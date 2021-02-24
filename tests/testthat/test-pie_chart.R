@@ -1,4 +1,18 @@
+
+test_that("data frame vacío", {
+
+  df <- tibble::tribble(
+    ~empresa, ~minutos
+  )
+
+  p <- pie_chart(df,  minutos, empresa)
+  expect_error(print(p), NA)
+  expect_true(ggplot2::is.ggplot(p))
+})
+
 test_that("simple pie chart", {
+
+
 
   serie <- structure(
     list(empresa = c("AMWU", "Ancel", "TMU"),
