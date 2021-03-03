@@ -100,7 +100,8 @@ pie_chart <- function(df, values, labels,
     ggplot2::geom_text(ggplot2::aes(label = lbl,
                   x = 10 * nudge_radio * sin(mid_angle) + nudge_x,
                   y = 10 * nudge_radio * cos(mid_angle) + nudge_y),
-              show.legend = FALSE) +
+              show.legend = FALSE,
+              family="Agency FB") +
     ggplot2::theme_minimal() +
     ggplot2::theme(plot.background = ggplot2::element_rect(fill = "#EEEEEE",
                                          color = "white"),
