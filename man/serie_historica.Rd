@@ -4,7 +4,7 @@
 \alias{serie_historica}
 \title{Serie Histórica}
 \usage{
-serie_historica(df, valor, fecha, nudge_text = 0, size_text = 5)
+serie_historica(df, valor, fecha, nudge_text = 0)
 }
 \value{
 

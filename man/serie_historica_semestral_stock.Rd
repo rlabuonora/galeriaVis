@@ -4,10 +4,10 @@
 \alias{serie_historica_semestral_stock}
 \title{Title}
 \usage{
-serie_historica_semestral_stock(df, valor, nudge_text = 0, size_text = 5)
+serie_historica_semestral_stock(df, valor, nudge_text = 0)
 }
 \arguments{
-\item{col_width}{}
+\item{nudge_text}{}
 }
 \value{
 

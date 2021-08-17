@@ -4,13 +4,17 @@
 \alias{barras_horizontales}
 \title{Title}
 \usage{
-barras_horizontales(df, valor, cat, nudge_text = 0, espacio_extra = 0.15)
+barras_horizontales(df, valor, cat, espacio_extra = 0.15)
 }
 \arguments{
-\item{espacio_extra}{}
+\item{df}{datos}
+
+\item{valor}{columna con los valores a graficar}
+
+\item{cat}{columnas con las categorias}
 }
 \value{
-
+plot object
 }
 \description{
 Title

@@ -4,7 +4,7 @@ test_that("data frame vacío", {
     ~depto, ~lineas
   )
 
-  p <- barras_horizontales(df, lineas, depto, nudge_text = 5e4)
+  p <- barras_horizontales(df, lineas, depto)
   expect_true(ggplot2::is.ggplot(p))
   #expect_true("GeomCol" %in% class(p$layers[[1]]$geom))
   #expect_error(print(p), NA)
@@ -36,7 +36,7 @@ test_that("Grafico 10", {
     "Treinta y Tres",   12928
   )
 
-  p <- barras_horizontales(df, lineas, depto, nudge_text = 5e4)
+  p <- barras_horizontales(df, lineas, depto)
   expect_true(ggplot2::is.ggplot(p))
   expect_true("GeomCol" %in% class(p$layers[[1]]$geom))
   expect_true("GeomText" %in% class(p$layers[[2]]$geom))

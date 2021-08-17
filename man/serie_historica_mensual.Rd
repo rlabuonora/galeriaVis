@@ -4,13 +4,7 @@
 \alias{serie_historica_mensual}
 \title{Title}
 \usage{
-serie_historica_mensual(
-  df,
-  valor,
-  nudge_text = 0,
-  size_text = 5,
-  col_width = 0.5
-)
+serie_historica_mensual(df, valor, nudge_text = 0, col_width = 0.5)
 }
 \arguments{
 \item{col_width}{}

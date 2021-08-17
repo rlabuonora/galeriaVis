@@ -4,10 +4,10 @@
 \alias{serie_historica_anual}
 \title{Serie Historica Anual}
 \usage{
-serie_historica_anual(df, valor, nudge_text = 0, size_text = 5)
+serie_historica_anual(df, valor, nudge_text = 0)
 }
 \arguments{
-\item{size_text}{}
+\item{nudge_text}{mover el texto de las etiquetas para arriba}
 }
 \value{
 
