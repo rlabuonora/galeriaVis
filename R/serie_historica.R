@@ -1,7 +1,3 @@
-
-
-
-
 formato_numero <- scales::number_format(big.mark=".",
                                         accuracy = 1,
                                         decimal.mark = ",")
@@ -31,20 +27,17 @@ serie_historica <- function(df, valor, fecha)  {
     lubridate::year(y)
   }
 
-  valor_quo <- rlang::enquo(valor)
-  fecha_quo <- rlang::enquo(fecha)
-
-  valores <- dplyr::pull(df, !! valor_quo)
+  valores <- pull(df, {{ valor }})
   auto_nudge <- max(valores) * 0.08
 
-  ggplot(df, aes(factor(!! fecha_quo), !! valor_quo)) +
+  ggplot(df, aes(factor( {{ fecha }}, {{ valor }}))) +
     geom_col(fill = pal[5], width = 0.5) +
-    geom_text(aes(label=formato_numero(!!valor_quo)),
+    geom_text(aes(label=formato_numero({{ valor }})),
                        nudge_y = auto_nudge,
                       family="Agency FB") +
     scale_x_discrete(labels = year_label,
                               expand = expansion(add = c(0.5, 0.5),
-                                                    mult = c(0, 0))) +
+                                                  mult = c(0, 0))) +
     scale_y_continuous(breaks = NULL) +
     geom_hline(yintercept = 0) +
     labs(x="", y="")
@@ -62,16 +55,15 @@ serie_historica <- function(df, valor, fecha)  {
 #' @examples
 serie_historica_anual <- function(df, valor) {
 
-  valor_quo <- rlang::enquo(valor)
 
-  valores <- pull(df, !! valor_quo)
+  valores <- pull(df, {{ valor }})
   auto_nudge <- max(valores) * 0.08
 
   df %>%
     mutate(lbl = forcats::fct_inorder(factor(year))) %>%
-    ggplot(aes(factor(lbl), !! valor_quo)) +
+    ggplot(aes(factor(lbl), {{ valor }})) +
     geom_col(fill = pal[5], width = 0.25) +
-    geom_text(aes(label=formato_numero(!!valor_quo)),
+    geom_text(aes(label=formato_numero({{ valor }})),
               nudge_y = auto_nudge,
               family="Agency FB") +
     scale_x_discrete(expand = expansion(add = c(0.5, 0.5),
@@ -95,17 +87,16 @@ serie_historica_anual <- function(df, valor) {
 #' @examples
 serie_historica_mensual <- function(df, valor, col_width=0.5) {
 
-  valor_quo <- rlang::enquo(valor)
 
-  valores <- pull(df, !! valor_quo)
+  valores <- pull(df, {{ valor }})
   auto_nudge <- max(valores) * 0.08
 
   df %>%
     dplyr::ungroup() %>%
     mutate(lbl = forcats::fct_inorder(glue::glue("{month}/{year}"))) %>%
-    ggplot(aes(factor(lbl), !! valor_quo)) +
+    ggplot(aes(factor(lbl), {{ valor }})) +
     geom_col(fill = pal[5], width = col_width) +
-    geom_text(aes(label=formato_numero(!!valor_quo)),
+    geom_text(aes(label=formato_numero({{ valor }})),
               nudge_y = auto_nudge,
               family="Agency FB") +
     scale_x_discrete(expand = expansion(add = c(0.5, 0.5),
@@ -129,17 +120,16 @@ serie_historica_mensual <- function(df, valor, col_width=0.5) {
 #' @examples
 serie_historica_semestral_flujo <- function(df, valor) {
 
-  valor_quo <- rlang::enquo(valor)
 
-  valores <- pull(df, !! valor_quo)
+  valores <- pull(df, {{ valor }})
   auto_nudge <- max(valores) * 0.08
 
   df %>%
     dplyr::ungroup() %>%
     mutate(lbl = forcats::fct_inorder(glue::glue("{year}\n{as.roman(semester)}"))) %>%
-    ggplot(aes(factor(lbl), !! valor_quo)) +
+    ggplot(aes(factor(lbl), {{ valor }})) +
     geom_col(fill = pal[5]) +
-    geom_text(aes(label=formato_numero(!!valor_quo)),
+    geom_text(aes(label=formato_numero({{ valor }})),
                        nudge_y = auto_nudge,
                        family="Agency FB") +
     scale_x_discrete(expand = expansion(0, 0)) +
@@ -163,19 +153,17 @@ serie_historica_semestral_flujo <- function(df, valor) {
 #' @examples
 serie_historica_semestral_stock <- function(df, valor) {
 
-  valor_quo <- rlang::enquo(valor)
-
   # Auto nudge
-  valores <- pull(df, !! valor_quo)
+  valores <- pull(df, {{ valor }})
   auto_nudge <- max(valores) * 0.08
 
   df %>%
     dplyr::ungroup() %>%
     mutate(semester_month = if_else(semester == 1, "6", "12")) %>%
     mutate(lbl = forcats::fct_inorder(glue::glue("{semester_month}-{year}"))) %>%
-    ggplot(aes(factor(lbl), !! valor_quo)) +
+    ggplot(aes(factor(lbl), {{ valor }})) +
     geom_col(fill = pal[5]) +
-    geom_text(aes(label=formato_numero(!!valor_quo)),
+    geom_text(aes(label=formato_numero({{ valor }})),
                        nudge_y = auto_nudge,
                        family="Agency FB") +
     scale_x_discrete(expand = expansion(0, 0)) +
