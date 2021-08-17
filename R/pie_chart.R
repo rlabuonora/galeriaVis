@@ -38,16 +38,13 @@ etiqueta_pie_chart <- function(df, values, labels, percent_accuracy=.1) {
 #' @param nudge_radio distancia del centro para las etiquetas
 #' @param nudge_x vector para mover las  etiquetas en eje x
 #' @param nudge_y vector para mover las etiquetas en eje  y
+#' @param percent_accuracy redondeo para la etiqueta de porcentajes
 #'
-#' @return
+#' @return grafica de torta
 #' @export
 #' @importFrom ggplot2 ggplot coord_fixed
 #' @importFrom ggplot2 scale_x_continuous scale_y_continuous scale_fill_manual scale_color_manual
 #' @examples
-#'
-#'
-#'
-
 pie_chart <- function(df, values, labels,
                         nudge_radio = .7,
                         nudge_x = 0,

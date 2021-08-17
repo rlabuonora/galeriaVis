@@ -24,4 +24,6 @@ Imports:
     lubridate,
     stringr,
     ggforce,
-    rlang
+    rlang,
+    glue,
+    magrittr

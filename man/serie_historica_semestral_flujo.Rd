@@ -4,10 +4,12 @@
 \alias{serie_historica_semestral_flujo}
 \title{Title}
 \usage{
-serie_historica_semestral_flujo(df, valor, nudge_text = 0)
+serie_historica_semestral_flujo(df, valor)
 }
 \arguments{
-\item{size_text}{}
+\item{df}{datos}
+
+\item{valor}{a graficar}
 }
 \value{
 

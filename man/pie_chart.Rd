@@ -26,15 +26,12 @@ pie_chart(
 \item{nudge_x}{vector para mover las  etiquetas en eje x}
 
 \item{nudge_y}{vector para mover las etiquetas en eje  y}
+
+\item{percent_accuracy}{redondeo para la etiqueta de porcentajes}
 }
 \value{
-
+grafica de torta
 }
 \description{
 Crear grafico de tortas
-}
-\examples{
-
-
-
 }

@@ -5,17 +5,18 @@
 formato_numero <- scales::number_format(big.mark=".",
                                         accuracy = 1,
                                         decimal.mark = ",")
+
 pal <- RColorBrewer::brewer.pal(n = 8, name = "Blues")
 
-year_label <- function(x) {
-  y <- as.Date(x)
-  lubridate::year(y)
-}
+
 
 
 #' Serie Hist&oacute;rica
+#' @param df data frame
+#' @param valor valor a graficar
+#' @param fecha fecha
 #'
-#' @return
+#' @return grafico
 #' @export
 #'
 #' @examples
@@ -23,7 +24,12 @@ year_label <- function(x) {
 #'
 #'
 
-serie_historica <- function(df, valor, fecha, nudge_text=0)  {
+serie_historica <- function(df, valor, fecha)  {
+
+  year_label <- function(x) {
+    y <- as.Date(x)
+    lubridate::year(y)
+  }
 
   valor_quo <- rlang::enquo(valor)
   fecha_quo <- rlang::enquo(fecha)
@@ -47,15 +53,14 @@ serie_historica <- function(df, valor, fecha, nudge_text=0)  {
 
 #' Serie Historica Anual
 #'
-#' @param df
-#' @param valor
-#' @param nudge_text mover el texto de las etiquetas para arriba
+#' @param df datos
+#' @param valor valor a graficar
 #'
 #' @return
 #' @export
 #' @importFrom dplyr mutate pull
 #' @examples
-serie_historica_anual <- function(df, valor, nudge_text=0) {
+serie_historica_anual <- function(df, valor) {
 
   valor_quo <- rlang::enquo(valor)
 
@@ -80,16 +85,15 @@ serie_historica_anual <- function(df, valor, nudge_text=0) {
 # TODO refactorear con semestral
 #' Title
 #'
-#' @param df
-#' @param valor
-#' @param nudge_text
-#' @param col_width
+#' @param df datos
+#' @param valor valores de la serie
+#' @param col_width ancho de las columnas
 #'
 #' @return
 #' @export
 #'
 #' @examples
-serie_historica_mensual <- function(df, valor,  nudge_text=0, col_width=0.5) {
+serie_historica_mensual <- function(df, valor, col_width=0.5) {
 
   valor_quo <- rlang::enquo(valor)
 
@@ -115,17 +119,15 @@ serie_historica_mensual <- function(df, valor,  nudge_text=0, col_width=0.5) {
 # TODO refactorear con semestral
 #' Title
 #'
-#' @param df
-#' @param valor
-#' @param nudge_text
-#' @param size_text
+#' @param df datos
+#' @param valor a graficar
 #'
 #' @return
 #' @export
 #' @importFrom ggplot2 geom_hline labs
 #'
 #' @examples
-serie_historica_semestral_flujo <- function(df, valor, nudge_text=0) {
+serie_historica_semestral_flujo <- function(df, valor) {
 
   valor_quo <- rlang::enquo(valor)
 
@@ -151,16 +153,15 @@ serie_historica_semestral_flujo <- function(df, valor, nudge_text=0) {
 # TODO refactorear con semestral
 #' Title
 #'
-#' @param df
-#' @param valor
-#' @param nudge_text
+#' @param df datos
+#' @param valor valor a graficar
 #'
-#' @return
+#' @return grafico
 #' @export
 #' @importFrom ggplot2 geom_col geom_text aes scale_x_discrete scale_y_discrete
 #' @importFrom dplyr if_else
 #' @examples
-serie_historica_semestral_stock <- function(df, valor, nudge_text=0) {
+serie_historica_semestral_stock <- function(df, valor) {
 
   valor_quo <- rlang::enquo(valor)
 

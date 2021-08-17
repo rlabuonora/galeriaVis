@@ -4,10 +4,17 @@
 \alias{serie_historica}
 \title{Serie Histórica}
 \usage{
-serie_historica(df, valor, fecha, nudge_text = 0)
+serie_historica(df, valor, fecha)
+}
+\arguments{
+\item{df}{data frame}
+
+\item{valor}{valor a graficar}
+
+\item{fecha}{fecha}
 }
 \value{
-
+grafico
 }
 \description{
 Serie Histórica

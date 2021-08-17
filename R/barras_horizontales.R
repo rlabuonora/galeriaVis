@@ -3,6 +3,7 @@
 #' @param df datos
 #' @param valor columna con los valores a graficar
 #' @param cat columnas con las categorias
+#' @param espacio_extra espacio
 #'
 #' @return plot object
 #' @export
@@ -29,7 +30,7 @@ barras_horizontales <- function(df, valor, cat, espacio_extra=0.15) {
                                            mult = c(0, 0))) +
     scale_y_continuous(breaks = NULL,
                        expand = expansion(add = c(1, 1),
-                                             mult = c(0, espacio_extra))) +
+                                          mult = c(0, espacio_extra))) +
     geom_hline(yintercept = 0) +
     labs(x="", y="") +
     coord_flip()

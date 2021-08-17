@@ -4,13 +4,15 @@
 \alias{serie_historica_semestral_stock}
 \title{Title}
 \usage{
-serie_historica_semestral_stock(df, valor, nudge_text = 0)
+serie_historica_semestral_stock(df, valor)
 }
 \arguments{
-\item{nudge_text}{}
+\item{df}{datos}
+
+\item{valor}{valor a graficar}
 }
 \value{
-
+grafico
 }
 \description{
 Title

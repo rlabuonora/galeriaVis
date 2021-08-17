@@ -10,7 +10,7 @@ test_that("serie_historica", {
     lineas = c(11193, 8846, 6874, 5474, 3563, 1986, 1914, 1762, 1729)),
     row.names = c(NA, -9L), class = c("tbl_df", "tbl", "data.frame"))
 
-  p <- serie_historica(serie, lineas, fecha, nudge_text = 5e2)
+  p <- serie_historica(serie, lineas, fecha)
   expect_true(ggplot2::is.ggplot(p))
   #expect_error(print(p), NA)
   expect_true("GeomCol" %in% class(p$layers[[1]]$geom))
@@ -30,7 +30,7 @@ test_that("serie_historica_anual", {
             146673364,124414817,102077806,83858473,74820344,
             68859034))
 
-  p <- serie_historica_anual(serie, val, nudge_text=c(10e6, 16e6, rep(10e6, 7)))
+  p <- serie_historica_anual(serie, val)
   expect_true(ggplot2::is.ggplot(p))
   #expect_error(print(p), NA)
   expect_true("GeomCol" %in% class(p$layers[[1]]$geom))
@@ -69,7 +69,7 @@ test_that("serie_historica_mensual", {
 
   p <- serie %>%
     dplyr::filter(year > 2018) %>%
-    serie_historica_mensual(trafico, nudge_text=1e4)
+    serie_historica_mensual(trafico)
 
   expect_true(ggplot2::is.ggplot(p))
   #expect_error(print(p), NA)
@@ -91,7 +91,7 @@ test_that("serie_historica_semestral_flujo", {
 
   p <-  serie_141 %>%
     dplyr::mutate(lineas = lineas / 1e3) %>%
-    serie_historica_semestral_flujo(lineas, nudge_text=4e1)
+    serie_historica_semestral_flujo(lineas)
 
   expect_true(ggplot2::is.ggplot(p))
   #expect_error(print(p), NA)
@@ -121,7 +121,7 @@ test_that("serie_historica_semestral_stock ", {
 
   p <-  serie_141 %>%
     dplyr::mutate(lineas = lineas / 1e3) %>%
-    serie_historica_semestral_stock(lineas, nudge_text=4e1)
+    serie_historica_semestral_stock(lineas)
 
   expect_true(ggplot2::is.ggplot(p))
   #expect_error(print(p), NA)

@@ -12,6 +12,8 @@ barras_horizontales(df, valor, cat, espacio_extra = 0.15)
 \item{valor}{columna con los valores a graficar}
 
 \item{cat}{columnas con las categorias}
+
+\item{espacio_extra}{espacio}
 }
 \value{
 plot object
