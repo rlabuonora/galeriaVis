@@ -21,10 +21,10 @@ etiqueta_pie_chart <- function(df, values, labels, percent_accuracy=.1) {
   val <- rlang::enquo(values)
   lbls <- rlang::enquo(labels)
   mutate(df,
-                lbls = !!lbls,
-                percent = scales::percent(!!val / sum(!!val), decimal.mark = ',', accuracy=percent_accuracy),
-                val_num = scales::number(!!val, big.mark = ".", decimal.mark = ','),
-                lbl = glue::glue("{lbls}\n{val_num}\n{percent}"))
+          lbls = !!lbls,
+          percent = scales::percent(!!val / sum(!!val), decimal.mark = ',', accuracy=percent_accuracy),
+          val_num = scales::number(!!val, big.mark = ".", decimal.mark = ','),
+          lbl = glue::glue("{lbls}\n{val_num}\n{percent}"))
 }
 
 

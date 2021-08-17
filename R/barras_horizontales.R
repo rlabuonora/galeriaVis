@@ -14,16 +14,15 @@ barras_horizontales <- function(df, valor, cat, espacio_extra=0.15) {
   if (nrow(df) == 0) {
     return(ggplot())
   }
-  valor_quo <- rlang::enquo(valor)
-  cat_quo <- rlang::enquo(cat)
 
-  valores <- dplyr::pull(df, !! valor_quo)
+  valores <- pull(df, {{ valor }})
   auto_nudge <- max(valores) * 0.08
 
   df %>%
-    ggplot(aes(forcats::fct_reorder(!!cat_quo, !! valor_quo), !! valor_quo)) +
+    ggplot(aes(forcats::fct_reorder( {{ cat }}, {{ valor }}),
+               {{ valor }})) +
     geom_col(fill = pal[5], width = 0.5) +
-    geom_text(aes(label=formato_numero(!! valor_quo)),
+    geom_text(aes(label=formato_numero( {{ valor }})),
               nudge_y = auto_nudge,
               family="Agency FB") +
     scale_x_discrete(expand = expansion(add = c(0.5, 0.5),
