@@ -38,7 +38,7 @@ serie_historica <- function(df, valor, fecha, nudge_text=0, size_text=5)  {
                        nudge_y = auto_nudge,
                       family="Agency FB") +
     ggplot2::scale_x_discrete(labels = year_label,
-                              expand = ggplot2::expand_scale(add = c(0.5, 0.5),
+                              expand = expansion(add = c(0.5, 0.5),
                                                     mult = c(0, 0))) +
     ggplot2::scale_y_continuous(breaks = NULL) +
     ggplot2::geom_hline(yintercept = 0) +
@@ -71,7 +71,7 @@ serie_historica_anual <- function(df, valor, nudge_text=0, size_text=5) {
     ggplot2::geom_text(ggplot2::aes(label=formato_numero(!!valor_quo)),
               nudge_y = auto_nudge,
               family="Agency FB") +
-    ggplot2::scale_x_discrete(expand = ggplot2::expand_scale(add = c(0.5, 0.5),
+    ggplot2::scale_x_discrete(expand = expansion(add = c(0.5, 0.5),
                                            mult = c(0, 0))) +
     ggplot2::scale_y_continuous(breaks = NULL) +
     ggplot2::geom_hline(yintercept = 0) +
@@ -107,7 +107,7 @@ serie_historica_mensual <- function(df, valor,  nudge_text=0, size_text=5, col_w
     ggplot2::geom_text(ggplot2::aes(label=formato_numero(!!valor_quo)),
               nudge_y = auto_nudge,
               family="Agency FB") +
-    ggplot2::scale_x_discrete(expand = ggplot2::expand_scale(add = c(0.5, 0.5),
+    ggplot2::scale_x_discrete(expand = expansion(add = c(0.5, 0.5),
                                            mult = c(0, 0))) +
     ggplot2::scale_y_continuous(breaks = NULL) +
     ggplot2::geom_hline(yintercept = 0) +

@@ -8,7 +8,7 @@
 #'
 #' @return
 #' @export
-#'
+#' @importFrom ggplot2 expansion
 #' @examples
 barras_horizontales <- function(df, valor, cat, nudge_text=0, espacio_extra=0.15) {
 
@@ -27,10 +27,10 @@ barras_horizontales <- function(df, valor, cat, nudge_text=0, espacio_extra=0.15
     ggplot2::geom_text(ggplot2::aes(label=formato_numero(!! valor_quo)),
               nudge_y = auto_nudge,
               family="Agency FB") +
-    ggplot2::scale_x_discrete(expand = ggplot2::expand_scale(add = c(0.5, 0.5),
+    ggplot2::scale_x_discrete(expand = expansion(add = c(0.5, 0.5),
                                            mult = c(0, 0))) +
     ggplot2::scale_y_continuous(breaks = NULL,
-                       expand = ggplot2::expand_scale(add = c(1, 1),
+                       expand = expansion(add = c(1, 1),
                                              mult = c(0, espacio_extra))) +
     ggplot2::geom_hline(yintercept = 0) +
     ggplot2::labs(x="", y="") +

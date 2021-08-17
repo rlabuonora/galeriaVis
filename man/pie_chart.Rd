@@ -11,7 +11,7 @@ pie_chart(
   nudge_radio = 0.7,
   nudge_x = 0,
   nudge_y = 0,
-  percent_accuracy = 0.1
+  percent_accuracy = 0.01
 )
 }
 \arguments{
