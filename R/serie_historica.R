@@ -55,17 +55,17 @@ serie_historica <- function(df, valor, fecha, nudge_text=0, size_text=5)  {
 #'
 #' @return
 #' @export
-#'
+#' @importFrom dplyr mutate pull
 #' @examples
 serie_historica_anual <- function(df, valor, nudge_text=0, size_text=5) {
 
   valor_quo <- rlang::enquo(valor)
 
-  valores <- dplyr::pull(df, !! valor_quo)
+  valores <- pull(df, !! valor_quo)
   auto_nudge <- max(valores) * 0.08
 
   df %>%
-    dplyr::mutate(lbl = forcats::fct_inorder(factor(year))) %>%
+    mutate(lbl = forcats::fct_inorder(factor(year))) %>%
     ggplot2::ggplot(ggplot2::aes(factor(lbl), !! valor_quo)) +
     ggplot2::geom_col(fill = pal[5], width = 0.25) +
     ggplot2::geom_text(ggplot2::aes(label=formato_numero(!!valor_quo)),
@@ -96,22 +96,22 @@ serie_historica_mensual <- function(df, valor,  nudge_text=0, size_text=5, col_w
 
   valor_quo <- rlang::enquo(valor)
 
-  valores <- dplyr::pull(df, !! valor_quo)
+  valores <- pull(df, !! valor_quo)
   auto_nudge <- max(valores) * 0.08
 
   df %>%
     dplyr::ungroup() %>%
-    dplyr::mutate(lbl = forcats::fct_inorder(glue::glue("{month}/{year}"))) %>%
-    ggplot2::ggplot(ggplot2::aes(factor(lbl), !! valor_quo)) +
-    ggplot2::geom_col(fill = pal[5], width = col_width) +
-    ggplot2::geom_text(ggplot2::aes(label=formato_numero(!!valor_quo)),
+    mutate(lbl = forcats::fct_inorder(glue::glue("{month}/{year}"))) %>%
+    ggplot(ggplot2::aes(factor(lbl), !! valor_quo)) +
+    geom_col(fill = pal[5], width = col_width) +
+    geom_text(ggplot2::aes(label=formato_numero(!!valor_quo)),
               nudge_y = auto_nudge,
               family="Agency FB") +
-    ggplot2::scale_x_discrete(expand = expansion(add = c(0.5, 0.5),
+    scale_x_discrete(expand = expansion(add = c(0.5, 0.5),
                                            mult = c(0, 0))) +
-    ggplot2::scale_y_continuous(breaks = NULL) +
-    ggplot2::geom_hline(yintercept = 0) +
-    ggplot2::labs(x="", y="")
+    scale_y_continuous(breaks = NULL) +
+    geom_hline(yintercept = 0) +
+    labs(x="", y="")
 }
 
 
@@ -126,28 +126,29 @@ serie_historica_mensual <- function(df, valor,  nudge_text=0, size_text=5, col_w
 #'
 #' @return
 #' @export
+#' @importFrom ggplot2 geom_hline labs
 #'
 #' @examples
 serie_historica_semestral_flujo <- function(df, valor, nudge_text=0, size_text=5) {
 
   valor_quo <- rlang::enquo(valor)
 
-  valores <- dplyr::pull(df, !! valor_quo)
+  valores <- pull(df, !! valor_quo)
   auto_nudge <- max(valores) * 0.08
 
   df %>%
     dplyr::ungroup() %>%
-    dplyr::mutate(lbl = forcats::fct_inorder(glue::glue("{year}\n{as.roman(semester)}"))) %>%
-    ggplot2::ggplot(ggplot2::aes(factor(lbl), !! valor_quo)) +
-    ggplot2::geom_col(fill = pal[5]) +
-    ggplot2::geom_text(ggplot2::aes(label=formato_numero(!!valor_quo)),
+    mutate(lbl = forcats::fct_inorder(glue::glue("{year}\n{as.roman(semester)}"))) %>%
+    ggplot(aes(factor(lbl), !! valor_quo)) +
+    geom_col(fill = pal[5]) +
+    geom_text(aes(label=formato_numero(!!valor_quo)),
                        nudge_y = auto_nudge,
                        family="Agency FB") +
-    ggplot2::scale_x_discrete(expand = ggplot2::expansion(0, 0)) +
-    ggplot2::scale_y_continuous(breaks = NULL,
-                                expand = ggplot2::expansion(.05, 0)) +
-    ggplot2::geom_hline(yintercept = 0) +
-    ggplot2::labs(x="", y="")
+    scale_x_discrete(expand = expansion(0, 0)) +
+    scale_y_continuous(breaks = NULL,
+                                expand = expansion(.05, 0)) +
+    geom_hline(yintercept = 0) +
+    labs(x="", y="")
 }
 
 
@@ -162,30 +163,31 @@ serie_historica_semestral_flujo <- function(df, valor, nudge_text=0, size_text=5
 #'
 #' @return
 #' @export
-#'
+#' @importFrom ggplot2 geom_col geom_text aes scale_x_discrete scale_y_discrete
+#' @importFrom dplyr if_else
 #' @examples
 serie_historica_semestral_stock <- function(df, valor, nudge_text=0, size_text=5) {
 
   valor_quo <- rlang::enquo(valor)
 
   # Auto nudge
-  valores <- dplyr::pull(df, !! valor_quo)
+  valores <- pull(df, !! valor_quo)
   auto_nudge <- max(valores) * 0.08
 
   df %>%
     dplyr::ungroup() %>%
-    dplyr::mutate(semester_month = dplyr::if_else(semester == 1, "6", "12")) %>%
-    dplyr::mutate(lbl = forcats::fct_inorder(glue::glue("{semester_month}-{year}"))) %>%
-    ggplot2::ggplot(ggplot2::aes(factor(lbl), !! valor_quo)) +
-    ggplot2::geom_col(fill = pal[5]) +
-    ggplot2::geom_text(ggplot2::aes(label=formato_numero(!!valor_quo)),
+    mutate(semester_month = if_else(semester == 1, "6", "12")) %>%
+    mutate(lbl = forcats::fct_inorder(glue::glue("{semester_month}-{year}"))) %>%
+    ggplot(aes(factor(lbl), !! valor_quo)) +
+    geom_col(fill = pal[5]) +
+    geom_text(aes(label=formato_numero(!!valor_quo)),
                        nudge_y = auto_nudge,
                        family="Agency FB") +
-    ggplot2::scale_x_discrete(expand = ggplot2::expansion(0, 0)) +
-    ggplot2::scale_y_continuous(breaks = NULL,
-                                expand = ggplot2::expansion(.05, 0)) +
-    ggplot2::geom_hline(yintercept = 0) +
-    ggplot2::labs(x="", y="")
+    scale_x_discrete(expand = expansion(0, 0)) +
+    scale_y_continuous(breaks = NULL,
+                                expand = expansion(.05, 0)) +
+    geom_hline(yintercept = 0) +
+    labs(x="", y="")
 }
 
 

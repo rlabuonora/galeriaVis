@@ -20,7 +20,7 @@ etiqueta_pie_chart <- function(df, values, labels, percent_accuracy=.1) {
 
   val <- rlang::enquo(values)
   lbls <- rlang::enquo(labels)
-  dplyr::mutate(df,
+  mutate(df,
                 lbls = !!lbls,
                 percent = scales::percent(!!val / sum(!!val), decimal.mark = ',', accuracy=percent_accuracy),
                 val_num = scales::number(!!val, big.mark = ".", decimal.mark = ','),
@@ -41,7 +41,8 @@ etiqueta_pie_chart <- function(df, values, labels, percent_accuracy=.1) {
 #'
 #' @return
 #' @export
-#'
+#' @importFrom ggplot2 ggplot coord_fixed
+#' @importFrom ggplot2 scale_x_continuous scale_y_continuous scale_fill_manual scale_color_manual
 #' @examples
 #'
 #'
@@ -55,7 +56,7 @@ pie_chart <- function(df, values, labels,
 ) {
 
   if (nrow(df) == 0) {
-    return(ggplot2::ggplot())
+    return(ggplot())
   }
 
   val <- rlang::enquo(values)
@@ -67,37 +68,37 @@ pie_chart <- function(df, values, labels,
   p <- df %>%
     tibble::add_column(nudge_radio=nudge_radio, nudge_x=nudge_x, nudge_y=nudge_y) %>%
     etiqueta_pie_chart(!!val, !!labs, percent_accuracy=percent_accuracy) %>%
-    dplyr::mutate(total = sum(!!val),
+    mutate(total = sum(!!val),
            end_angle = 2*pi*cumsum(!!val) / total,
            start_angle = dplyr::lag(end_angle, default = 0),
            mid_angle = (end_angle + start_angle) / 2) %>%
-    ggplot2::ggplot() +
-    ggforce::geom_arc_bar(ggplot2::aes(x0 = 0, y0 = 0,
+    ggplot() +
+    ggforce::geom_arc_bar(aes(x0 = 0, y0 = 0,
                      r0=0, r = 10,
                      fill = !!labs,
                      color = !!labs,
                      start = start_angle,
                      end   = end_angle),
     ) +
-    ggplot2::coord_fixed(clip = "off", ratio=1) +
-    ggplot2::scale_x_continuous(
+    coord_fixed(clip = "off", ratio=1) +
+    scale_x_continuous(
       expand = c(.6, .6),
       name = "",
       breaks = NULL,
       labels = NULL
     ) +
-    ggplot2::scale_y_continuous(
+    scale_y_continuous(
       name = "",
       breaks = NULL,
       labels = NULL,
       expand=c(.1, .1)
     ) +
-    ggplot2::scale_fill_manual(name = lab_char,
+    scale_fill_manual(name = lab_char,
                       values = unname(paleta_cats[1:n])) +
-    ggplot2::scale_color_manual(name = lab_char,
+    scale_color_manual(name = lab_char,
                        values = unname(paleta_cats[1:n])
     ) +
-    ggplot2::geom_text(ggplot2::aes(label = lbl,
+    geom_text(aes(label = lbl,
                   x = 10 * nudge_radio * sin(mid_angle) + nudge_x,
                   y = 10 * nudge_radio * cos(mid_angle) + nudge_y),
               show.legend = FALSE,
