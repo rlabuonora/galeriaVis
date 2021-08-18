@@ -22,8 +22,12 @@ etiqueta_pie_chart <- function(df, values, labels, percent_accuracy=.1) {
   lbls <- rlang::enquo(labels)
   mutate(df,
           lbls = {{ labels }},
-          percent = scales::percent({{ values }} / sum({{ values }}), decimal.mark = ',', accuracy=percent_accuracy),
-          val_num = scales::number({{ values }}, big.mark = ".", decimal.mark = ','),
+          percent = scales::percent({{ values }} / sum({{ values }}),
+                                    decimal.mark = ',',
+                                    accuracy=percent_accuracy),
+          val_num = scales::number({{ values }},
+                                   big.mark = ".",
+                                   decimal.mark = ','),
           lbl = glue::glue("{lbls}\n{val_num}\n{percent}"))
 }
 
@@ -56,9 +60,8 @@ pie_chart <- function(df, values, labels,
     return(ggplot())
   }
 
-  labs <- rlang::enquo(labels)
-
-  lab_char <- stringr::str_to_title(as.character(labs)[2])
+  lab_char <- rlang::as_label(labs) %>%
+    stringr::str_to_title()
 
   n <- nrow(df)
 
@@ -95,7 +98,7 @@ pie_chart <- function(df, values, labels,
     scale_color_manual(name = lab_char,
                        values = unname(paleta_cats[1:n])
     ) +
-    geom_text(aes(label = {{ labels }},
+    geom_text(aes(label = lbl, # esto viene de etiqueta_pie_chart
                   x = 10 * nudge_radio * sin(mid_angle) + nudge_x,
                   y = 10 * nudge_radio * cos(mid_angle) + nudge_y),
               show.legend = FALSE,
