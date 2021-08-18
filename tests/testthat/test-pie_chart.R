@@ -12,8 +12,6 @@ test_that("data frame vacío", {
 
 test_that("simple pie chart", {
 
-
-
   serie <- structure(
     list(empresa = c("AMWU", "Ancel", "TMU"),
          minutos = c(23223127, 145676036, 61796380)),

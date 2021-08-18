@@ -21,9 +21,9 @@ etiqueta_pie_chart <- function(df, values, labels, percent_accuracy=.1) {
   val <- rlang::enquo(values)
   lbls <- rlang::enquo(labels)
   mutate(df,
-          lbls = !!lbls,
-          percent = scales::percent(!!val / sum(!!val), decimal.mark = ',', accuracy=percent_accuracy),
-          val_num = scales::number(!!val, big.mark = ".", decimal.mark = ','),
+          lbls = {{ labels }},
+          percent = scales::percent({{ values }} / sum({{ values }}), decimal.mark = ',', accuracy=percent_accuracy),
+          val_num = scales::number({{ values }}, big.mark = ".", decimal.mark = ','),
           lbl = glue::glue("{lbls}\n{val_num}\n{percent}"))
 }
 
@@ -56,24 +56,24 @@ pie_chart <- function(df, values, labels,
     return(ggplot())
   }
 
-  val <- rlang::enquo(values)
   labs <- rlang::enquo(labels)
+
   lab_char <- stringr::str_to_title(as.character(labs)[2])
 
   n <- nrow(df)
 
   p <- df %>%
     tibble::add_column(nudge_radio=nudge_radio, nudge_x=nudge_x, nudge_y=nudge_y) %>%
-    etiqueta_pie_chart(!!val, !!labs, percent_accuracy=percent_accuracy) %>%
-    mutate(total = sum(!!val),
-           end_angle = 2*pi*cumsum(!!val) / total,
+    etiqueta_pie_chart({{ values }}, {{ labels }}, percent_accuracy=percent_accuracy) %>%
+    mutate(total = sum({{ values }}),
+           end_angle = 2*pi*cumsum({{ values }}) / total,
            start_angle = dplyr::lag(end_angle, default = 0),
            mid_angle = (end_angle + start_angle) / 2) %>%
     ggplot() +
     ggforce::geom_arc_bar(aes(x0 = 0, y0 = 0,
                      r0=0, r = 10,
-                     fill = !!labs,
-                     color = !!labs,
+                     fill = {{ labels }},
+                     color = {{ labels }},
                      start = start_angle,
                      end   = end_angle),
     ) +
