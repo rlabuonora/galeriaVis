@@ -95,7 +95,7 @@ pie_chart <- function(df, values, labels,
     scale_color_manual(name = lab_char,
                        values = unname(paleta_cats[1:n])
     ) +
-    geom_text(aes(label = lbl,
+    geom_text(aes(label = {{ labels }},
                   x = 10 * nudge_radio * sin(mid_angle) + nudge_x,
                   y = 10 * nudge_radio * cos(mid_angle) + nudge_y),
               show.legend = FALSE,
