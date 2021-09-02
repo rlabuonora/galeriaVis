@@ -4,7 +4,7 @@
 \alias{barras_horizontales}
 \title{Title}
 \usage{
-barras_horizontales(df, valor, cat, espacio_extra = 0.15)
+barras_horizontales(df, valor, cat, nudge = 0.08, espacio_extra = 0.15)
 }
 \arguments{
 \item{df}{datos}

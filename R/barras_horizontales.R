@@ -9,14 +9,16 @@
 #' @export
 #' @importFrom ggplot2 expansion coord_flip
 #' @examples
-barras_horizontales <- function(df, valor, cat, espacio_extra=0.15) {
+barras_horizontales <- function(df, valor, cat,
+                                nudge = 0.08,
+                                espacio_extra=0.15) {
 
   if (nrow(df) == 0) {
     return(ggplot())
   }
 
   valores <- pull(df, {{ valor }})
-  auto_nudge <- max(valores) * 0.08
+  auto_nudge <- max(valores) * nudge
 
   df %>%
     ggplot(aes(forcats::fct_reorder( {{ cat }}, {{ valor }}),
