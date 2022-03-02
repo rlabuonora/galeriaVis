@@ -1,3 +1,21 @@
+
+etiqueta_barras <- function(df, values, labels, percent_accuracy=.1) {
+
+  val <- rlang::enquo(values)
+  lbls <- rlang::enquo(labels)
+  mutate(df,
+         lbls = {{ labels }},
+         percent = scales::percent({{ values }} / sum({{ values }}),
+                                   decimal.mark = ',',
+                                   accuracy=percent_accuracy),
+         val_num = scales::number({{ values }},
+                                  big.mark = ".",
+                                  decimal.mark = ','),
+         lbl = glue::glue("{val_num} ({percent})"))
+}
+
+
+
 #' Title
 #'
 #' @param df datos
@@ -21,10 +39,11 @@ barras_horizontales <- function(df, valor, cat,
   auto_nudge <- max(valores) * nudge
 
   df %>%
+    etiqueta_barras({{ valor }}, {{ cat }}) %>%
     ggplot(aes(forcats::fct_reorder( {{ cat }}, {{ valor }}),
                {{ valor }})) +
     geom_col(fill = pal[5], width = 0.5) +
-    geom_text(aes(label=formato_numero( {{ valor }})),
+    geom_text(aes(label=lbl),
               nudge_y = auto_nudge,
               family="Agency FB") +
     scale_x_discrete(expand = expansion(add = c(0.5, 0.5),
