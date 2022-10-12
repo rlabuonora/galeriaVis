@@ -13,9 +13,6 @@ serie_historica_mensual(df, valor, col_width = 0.5)
 
 \item{col_width}{ancho de las columnas}
 }
-\value{
-
-}
 \description{
 Title
 }

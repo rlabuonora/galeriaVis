@@ -4,7 +4,14 @@
 \alias{barras_horizontales}
 \title{Title}
 \usage{
-barras_horizontales(df, valor, cat, nudge = 0.08, espacio_extra = 0.15)
+barras_horizontales(
+  df,
+  valor,
+  cat,
+  nudge = 0.12,
+  accuracy = 1,
+  espacio_extra = 0.15
+)
 }
 \arguments{
 \item{df}{datos}
@@ -12,6 +19,10 @@ barras_horizontales(df, valor, cat, nudge = 0.08, espacio_extra = 0.15)
 \item{valor}{columna con los valores a graficar}
 
 \item{cat}{columnas con las categorias}
+
+\item{nudge}{valor para mover el texto}
+
+\item{accuracy}{precision para los numeros (no los porcentajes!) de las etiquetas}
 
 \item{espacio_extra}{espacio}
 }

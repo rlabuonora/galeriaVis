@@ -100,6 +100,9 @@ test_that("serie_historica_semestral_flujo", {
 
   etiquetas <- ggplot2::ggplot_build(p)$layout$panel_scales_x[[1]]$range$range
 
+  # expect_equal("'11-I", etiquetas[[1]])
+  # expect_equal("'11-II", etiquetas[[2]])
+
   expect_equal("2011\nI", etiquetas[[1]])
   expect_equal("2011\nII", etiquetas[[2]])
 

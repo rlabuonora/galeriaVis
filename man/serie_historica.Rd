@@ -19,8 +19,3 @@ grafico
 \description{
 Serie Histórica
 }
-\examples{
-
-
-
-}

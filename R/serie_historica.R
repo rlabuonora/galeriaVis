@@ -15,10 +15,7 @@ pal <- RColorBrewer::brewer.pal(n = 8, name = "Blues")
 #' @return grafico
 #' @export
 #'
-#' @examples
-#'
-#'
-#'
+
 
 serie_historica <- function(df, valor, fecha)  {
 
@@ -40,7 +37,8 @@ serie_historica <- function(df, valor, fecha)  {
                                                   mult = c(0, 0))) +
     scale_y_continuous(breaks = NULL) +
     geom_hline(yintercept = 0) +
-    labs(x="", y="")
+    labs(x="", y="") +
+    ggplot2::expand_limits(y=0)
 }
 
 
@@ -49,10 +47,8 @@ serie_historica <- function(df, valor, fecha)  {
 #' @param df datos
 #' @param valor valor a graficar
 #'
-#' @return
 #' @export
 #' @importFrom dplyr mutate pull
-#' @examples
 serie_historica_anual <- function(df, valor) {
 
 
@@ -81,10 +77,8 @@ serie_historica_anual <- function(df, valor) {
 #' @param valor valores de la serie
 #' @param col_width ancho de las columnas
 #'
-#' @return
 #' @export
 #'
-#' @examples
 serie_historica_mensual <- function(df, valor, col_width=0.5) {
 
 
@@ -113,11 +107,9 @@ serie_historica_mensual <- function(df, valor, col_width=0.5) {
 #' @param df datos
 #' @param valor a graficar
 #'
-#' @return
 #' @export
-#' @importFrom ggplot2 geom_hline labs
+#' @importFrom ggplot2 geom_hline labs theme
 #'
-#' @examples
 serie_historica_semestral_flujo <- function(df, valor) {
 
 
@@ -136,7 +128,8 @@ serie_historica_semestral_flujo <- function(df, valor) {
     scale_y_continuous(breaks = NULL,
                                 expand = expansion(.05, 0)) +
     geom_hline(yintercept = 0) +
-    labs(x="", y="")
+    labs(x="", y="") +
+    theme(axis.text.x = ggplot2::element_text(vjust=6))
 }
 
 
@@ -150,7 +143,6 @@ serie_historica_semestral_flujo <- function(df, valor) {
 #' @export
 #' @importFrom ggplot2 geom_col geom_text aes scale_x_discrete scale_y_discrete
 #' @importFrom dplyr if_else
-#' @examples
 serie_historica_semestral_stock <- function(df, valor) {
 
   # Auto nudge
@@ -170,7 +162,8 @@ serie_historica_semestral_stock <- function(df, valor) {
     scale_y_continuous(breaks = NULL,
                                 expand = expansion(.05, 0)) +
     geom_hline(yintercept = 0) +
-    labs(x="", y="")
+    labs(x="", y="") +
+    theme(axis.text.x = ggplot2::element_text(vjust=6))
 }
 
 

@@ -44,3 +44,24 @@ test_that("Grafico 10", {
 
 
 })
+
+
+test_that("Ceros", {
+
+  skip("Empty")
+
+  df <- tibble::tribble(
+    ~medio,            ~servicios,
+    "DSL",              105600,
+    "Fibra óptica",     934604,
+    "LMDS",             10402,
+    "Otros",            71785
+  )
+
+
+  p <- barras_horizontales(df, servicios, medio)
+})
+
+
+
+

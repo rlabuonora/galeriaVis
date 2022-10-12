@@ -11,9 +11,6 @@ serie_historica_semestral_flujo(df, valor)
 
 \item{valor}{a graficar}
 }
-\value{
-
-}
 \description{
 Title
 }

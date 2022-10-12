@@ -11,9 +11,6 @@ serie_historica_anual(df, valor)
 
 \item{valor}{valor a graficar}
 }
-\value{
-
-}
 \description{
 Serie Historica Anual
 }

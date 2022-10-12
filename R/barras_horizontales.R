@@ -1,17 +1,23 @@
-
-etiqueta_barras <- function(df, values, labels, percent_accuracy=.1) {
+# TODO: refactorear con la de pie char
+etiqueta_barras <- function(df, values, labels,
+                            accuracy=NULL,
+                            percent_accuracy=1) {
 
   val <- rlang::enquo(values)
   lbls <- rlang::enquo(labels)
-  mutate(df,
-         lbls = {{ labels }},
-         percent = scales::percent({{ values }} / sum({{ values }}),
-                                   decimal.mark = ',',
-                                   accuracy=percent_accuracy),
+  df %>%
+    percent({{values }}, {{ labels }}) %>%
+    mutate(lbls = {{ labels }},
          val_num = scales::number({{ values }},
                                   big.mark = ".",
-                                  decimal.mark = ','),
+                                  decimal.mark = ',',
+                                  accuracy=accuracy),
          lbl = glue::glue("{val_num} ({percent})"))
+
+  # mutate(df,  percent_num = if_else(cum_sum == max(cum_sum),
+  #                                   1-dplyr::lag(cum_sum, n=1),
+  #                                   percent_num))
+
 }
 
 
@@ -20,15 +26,17 @@ etiqueta_barras <- function(df, values, labels, percent_accuracy=.1) {
 #'
 #' @param df datos
 #' @param valor columna con los valores a graficar
+#' @param nudge valor para mover el texto
+#' @param accuracy precision para los numeros (no los porcentajes!) de las etiquetas
 #' @param cat columnas con las categorias
 #' @param espacio_extra espacio
 #'
 #' @return plot object
 #' @export
 #' @importFrom ggplot2 expansion coord_flip
-#' @examples
 barras_horizontales <- function(df, valor, cat,
-                                nudge = 0.08,
+                                nudge = 0.12,
+                                accuracy=1,
                                 espacio_extra=0.15) {
 
   if (nrow(df) == 0) {
@@ -39,7 +47,7 @@ barras_horizontales <- function(df, valor, cat,
   auto_nudge <- max(valores) * nudge
 
   df %>%
-    etiqueta_barras({{ valor }}, {{ cat }}) %>%
+    etiqueta_barras({{ valor }}, {{ cat }}, accuracy=accuracy) %>%
     ggplot(aes(forcats::fct_reorder( {{ cat }}, {{ valor }}),
                {{ valor }})) +
     geom_col(fill = pal[5], width = 0.5) +
