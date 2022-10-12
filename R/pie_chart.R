@@ -21,7 +21,7 @@ etiqueta_pie_chart <- function(df, values, labels) {
   val <- rlang::enquo(values)
   lbls <- rlang::enquo(labels)
   df %>%
-    percent({{ values}}, {{ labels }}) %>%
+    percent({{ values }}, {{ labels }}) %>%
     mutate(lbls = {{ labels }},
          val_num = scales::number({{ values }},
                                    big.mark = ".",
@@ -40,7 +40,6 @@ etiqueta_pie_chart <- function(df, values, labels) {
 #' @param nudge_radio distancia del centro para las etiquetas
 #' @param nudge_x vector para mover las  etiquetas en eje x
 #' @param nudge_y vector para mover las etiquetas en eje  y
-#' @param percent_accuracy redondeo para la etiqueta de porcentajes
 #'
 #' @return grafica de torta
 #' @export
@@ -67,16 +66,16 @@ pie_chart <- function(df, values, labels,
     tibble::add_column(nudge_radio=nudge_radio, nudge_x=nudge_x, nudge_y=nudge_y) %>%
     etiqueta_pie_chart({{ values }}, {{ labels }}) %>%
     mutate(total = sum({{ values }}),
-           end_angle = 2*pi*cumsum({{ values }}) / total,
-           start_angle = dplyr::lag(end_angle, default = 0),
-           mid_angle = (end_angle + start_angle) / 2) %>%
+           end_angle = 2*pi*cumsum({{ values }}) / .data$total,
+           start_angle = dplyr::lag(.data$end_angle, default = 0),
+           mid_angle = (.data$end_angle + .data$start_angle) / 2) %>%
     ggplot() +
     ggforce::geom_arc_bar(aes(x0 = 0, y0 = 0,
                      r0=0, r = 10,
                      fill = {{ labels }},
                      color = {{ labels }},
-                     start = start_angle,
-                     end   = end_angle),
+                     start = .data$start_angle,
+                     end   = .data$end_angle),
     ) +
     coord_fixed(clip = "off", ratio=1) +
     scale_x_continuous(
@@ -96,9 +95,9 @@ pie_chart <- function(df, values, labels,
     scale_color_manual(name = lab_char,
                        values = unname(paleta_cats[1:n])
     ) +
-    geom_text(aes(label = lbl, # esto viene de etiqueta_pie_chart
-                  x = 10 * nudge_radio * sin(mid_angle) + nudge_x,
-                  y = 10 * nudge_radio * cos(mid_angle) + nudge_y),
+    geom_text(aes(label = .data$lbl, # esto viene de etiqueta_pie_chart
+                  x = 10 * nudge_radio * sin(.data$mid_angle) + nudge_x,
+                  y = 10 * nudge_radio * cos(.data$mid_angle) + nudge_y),
               show.legend = FALSE,
               family="Agency FB") +
     ggplot2::theme_minimal() +

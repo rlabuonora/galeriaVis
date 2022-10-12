@@ -1,6 +1,8 @@
-formato_numero <- scales::number_format(big.mark=".",
+formato_numero <- function(x) {
+  scales::number_format(big.mark=".",
                                         accuracy = 1,
-                                        decimal.mark = ",")
+                                        decimal.mark = ",")(x)
+}
 
 pal <- RColorBrewer::brewer.pal(n = 8, name = "Blues")
 
@@ -56,8 +58,8 @@ serie_historica_anual <- function(df, valor) {
   auto_nudge <- max(valores) * 0.08
 
   df %>%
-    mutate(lbl = forcats::fct_inorder(factor(year))) %>%
-    ggplot(aes(factor(lbl), {{ valor }})) +
+    mutate(lbl = forcats::fct_inorder(factor(.data$year))) %>%
+    ggplot(aes(factor(.data$lbl), {{ valor }})) +
     geom_col(fill = pal[5], width = 0.25) +
     geom_text(aes(label=formato_numero({{ valor }})),
               nudge_y = auto_nudge,
@@ -88,7 +90,7 @@ serie_historica_mensual <- function(df, valor, col_width=0.5) {
   df %>%
     dplyr::ungroup() %>%
     mutate(lbl = forcats::fct_inorder(glue::glue("{month}/{year}"))) %>%
-    ggplot(aes(factor(lbl), {{ valor }})) +
+    ggplot(aes(factor(.data$lbl), {{ valor }})) +
     geom_col(fill = pal[5], width = col_width) +
     geom_text(aes(label=formato_numero({{ valor }})),
               nudge_y = auto_nudge,
@@ -119,7 +121,7 @@ serie_historica_semestral_flujo <- function(df, valor) {
   df %>%
     dplyr::ungroup() %>%
     mutate(lbl = forcats::fct_inorder(glue::glue("{year}\n{as.roman(semester)}"))) %>%
-    ggplot(aes(factor(lbl), {{ valor }})) +
+    ggplot(aes(factor(.data$lbl), {{ valor }})) +
     geom_col(fill = pal[5]) +
     geom_text(aes(label=formato_numero({{ valor }})),
                        nudge_y = auto_nudge,
@@ -151,9 +153,9 @@ serie_historica_semestral_stock <- function(df, valor) {
 
   df %>%
     dplyr::ungroup() %>%
-    mutate(semester_month = if_else(semester == 1, "6", "12")) %>%
+    mutate(semester_month = if_else(.data$semester == 1, "6", "12")) %>%
     mutate(lbl = forcats::fct_inorder(glue::glue("{semester_month}-{year}"))) %>%
-    ggplot(aes(factor(lbl), {{ valor }})) +
+    ggplot(aes(factor(.data$lbl), {{ valor }})) +
     geom_col(fill = pal[5]) +
     geom_text(aes(label=formato_numero({{ valor }})),
                        nudge_y = auto_nudge,

@@ -18,8 +18,6 @@ pie_chart(df, values, labels, nudge_radio = 0.7, nudge_x = 0, nudge_y = 0)
 \item{nudge_x}{vector para mover las  etiquetas en eje x}
 
 \item{nudge_y}{vector para mover las etiquetas en eje  y}
-
-\item{percent_accuracy}{redondeo para la etiqueta de porcentajes}
 }
 \value{
 grafica de torta

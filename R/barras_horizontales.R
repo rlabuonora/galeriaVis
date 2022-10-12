@@ -51,7 +51,7 @@ barras_horizontales <- function(df, valor, cat,
     ggplot(aes(forcats::fct_reorder( {{ cat }}, {{ valor }}),
                {{ valor }})) +
     geom_col(fill = pal[5], width = 0.5) +
-    geom_text(aes(label=lbl),
+    geom_text(aes(label=.data$lbl),
               nudge_y = auto_nudge,
               family="Agency FB") +
     scale_x_discrete(expand = expansion(add = c(0.5, 0.5),
