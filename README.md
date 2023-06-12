@@ -3,9 +3,7 @@
 
 Principales visualizaciones para el  [Informes de evolución del mercado de telecomunicaciones](https://www.gub.uy/unidad-reguladora-servicios-comunicaciones/sites/unidad-reguladora-servicios-comunicaciones/files/2023-04/informe%20telecom%20dic%2022.pdf) 
 
-## Installation
-
-You can install the development version of galeriaVis from [GitHub](https://github.com/) with:
+## Instalación
 
 ``` r
 # install.packages("devtools")
@@ -16,7 +14,9 @@ devtools::install_github("rlabuonora/galeriaVis")
 
 
 ``` r
+library(dplyr)
 library(galeriaVis)
+
 tibble::tribble(
   ~year, ~semester, ~ventas,
   2018, 1, 2594825643,
