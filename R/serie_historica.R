@@ -34,9 +34,7 @@ serie_historica <- function(df, valor, fecha)  {
     geom_text(aes(label=formato_numero({{ valor }})),
                        nudge_y = auto_nudge,
                       family="Agency FB") +
-    scale_x_discrete(labels = year_label,
-                              expand = expansion(add = c(0.5, 0.5),
-                                                  mult = c(0, 0))) +
+    scale_x_discrete(labels = year_label) +
     scale_y_continuous(breaks = NULL) +
     geom_hline(yintercept = 0) +
     labs(x="", y="") +
