@@ -13,7 +13,7 @@ percent <- function(df, numerica, categorica) {
                                      .data$percent_num_round ),
          percent = scales::percent(.data$percent_num_round,
                                    decimal.mark = ',',
-                                   accuracy=1)
+                                   accuracy=.1)
          )
 
   df

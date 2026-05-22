@@ -2,7 +2,7 @@
 % Please edit documentation in R/barras_horizontales.R
 \name{barras_horizontales}
 \alias{barras_horizontales}
-\title{Title}
+\title{Barras horizontales}
 \usage{
 barras_horizontales(
   df,
@@ -30,5 +30,5 @@ barras_horizontales(
 plot object
 }
 \description{
-Title
+Barras horizontales
 }

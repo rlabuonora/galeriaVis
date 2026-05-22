@@ -16,7 +16,7 @@ paleta_cats <- c(
 
 # Helper para armar las etiquetas (Devuelve df con columna lbl) ---------
 
-etiqueta_pie_chart <- function(df, values, labels) {
+etiqueta_pie_chart <- function(df, values, labels, accuracy = .1, percent_accuracy = .1) {
 
   val <- rlang::enquo(values)
   lbls <- rlang::enquo(labels)
@@ -25,7 +25,11 @@ etiqueta_pie_chart <- function(df, values, labels) {
     mutate(lbls = {{ labels }},
          val_num = scales::number({{ values }},
                                    big.mark = ".",
-                                   decimal.mark = ','),
+                                   decimal.mark = ',',
+                                   accuracy = accuracy),
+         percent = scales::percent(.data$percent_num_round,
+                                   decimal.mark = ',',
+                                   accuracy = percent_accuracy),
           lbl = glue::glue("{lbls}\n{val_num}\n{percent}"))
 }
 
@@ -49,7 +53,9 @@ etiqueta_pie_chart <- function(df, values, labels) {
 pie_chart <- function(df, values, labels,
                         nudge_radio = .7,
                         nudge_x = 0,
-                        nudge_y = 0
+                        nudge_y = 0,
+                        accuracy = .1,
+                        percent_accuracy = .1
 
 ) {
 
@@ -64,7 +70,12 @@ pie_chart <- function(df, values, labels,
 
   p <- df %>%
     tibble::add_column(nudge_radio=nudge_radio, nudge_x=nudge_x, nudge_y=nudge_y) %>%
-    etiqueta_pie_chart({{ values }}, {{ labels }}) %>%
+    etiqueta_pie_chart(
+      {{ values }},
+      {{ labels }},
+      accuracy = accuracy,
+      percent_accuracy = percent_accuracy
+    ) %>%
     mutate(total = sum({{ values }}),
            end_angle = 2*pi*cumsum({{ values }}) / .data$total,
            start_angle = dplyr::lag(.data$end_angle, default = 0),

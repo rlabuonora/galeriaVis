@@ -41,7 +41,7 @@ test_that("Suma menos de 100%", {
   percents <- percent(df, servicios, medio)
 
   expect_equal(percents$percent,
-               c("9%",  "84%", "1%",  "6%"))
+               c("9,0%",  "84,0%", "1,0%",  "6,0%"))
 
   expect_true(all(percents$percent_num_round >=0))
 
@@ -59,7 +59,7 @@ test_that("Redondeo", {
 
 
   percents <- percent(df, numeric, tipo_red)
-  expected <- c("1%",  "19%", "20%", "60%")
+  expected <- c("1,0%",  "19,0%", "20,0%", "60,0%")
 
   expect_true(all(percents$percent_num_round >=0))
 

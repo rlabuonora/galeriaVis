@@ -1,6 +1,6 @@
 formato_numero <- function(x) {
   scales::number_format(big.mark=".",
-                                        accuracy = 1,
+                                        accuracy = .1,
                                         decimal.mark = ",")(x)
 }
 
@@ -110,7 +110,7 @@ serie_historica_mensual <- function(df, valor, col_width=0.5) {
 #' @export
 #' @importFrom ggplot2 geom_hline labs theme
 #'
-serie_historica_semestral_flujo <- function(df, valor) {
+serie_historica_semestral_flujo <- function(df, valor, accuracy = .1, label_size = 4.5) {
 
 
   valores <- pull(df, {{ valor }})
@@ -121,15 +121,23 @@ serie_historica_semestral_flujo <- function(df, valor) {
     mutate(lbl = forcats::fct_inorder(glue::glue("{year}\n{as.roman(semester)}"))) %>%
     ggplot(aes(factor(.data$lbl), {{ valor }})) +
     geom_col(fill = pal[5]) +
-    geom_text(aes(label=formato_numero({{ valor }})),
+    geom_text(aes(label=scales::number({{ valor }},
+                                       big.mark=".",
+                                       decimal.mark=",",
+                                       accuracy = accuracy)),
                        nudge_y = auto_nudge,
+                       size=label_size,
                        family="Agency FB") +
     scale_x_discrete(expand = expansion(0, 0)) +
     scale_y_continuous(breaks = NULL,
-                                expand = expansion(.05, 0)) +
+                                expand = expansion(mult = c(0.05, 0.18))) +
     geom_hline(yintercept = 0) +
     labs(x="", y="") +
-    theme(axis.text.x = ggplot2::element_text(vjust=6))
+    coord_cartesian(clip = "off") +
+    theme(axis.text.x = ggplot2::element_text(vjust=6),
+          panel.grid.major.x = ggplot2::element_blank(),
+          panel.grid.minor.x = ggplot2::element_blank(),
+          plot.margin = ggplot2::margin(t = 18, r = 10, b = 10, l = 10))
 }
 
 
@@ -143,7 +151,7 @@ serie_historica_semestral_flujo <- function(df, valor) {
 #' @export
 #' @importFrom ggplot2 geom_col geom_text aes scale_x_discrete scale_y_discrete
 #' @importFrom dplyr if_else
-serie_historica_semestral_stock <- function(df, valor) {
+serie_historica_semestral_stock <- function(df, valor, accuracy = .1) {
 
   # Auto nudge
   valores <- pull(df, {{ valor }})
@@ -155,15 +163,21 @@ serie_historica_semestral_stock <- function(df, valor) {
     mutate(lbl = forcats::fct_inorder(glue::glue("{semester_month}-{year}"))) %>%
     ggplot(aes(factor(.data$lbl), {{ valor }})) +
     geom_col(fill = pal[5]) +
-    geom_text(aes(label=formato_numero({{ valor }})),
+    geom_text(aes(label=scales::number({{ valor }},
+                                       big.mark=".",
+                                       decimal.mark=",",
+                                       accuracy = accuracy)),
                        nudge_y = auto_nudge,
+                       size=4.5,
                        family="Agency FB") +
     scale_x_discrete(expand = expansion(0, 0)) +
     scale_y_continuous(breaks = NULL,
-                                expand = expansion(.05, 0)) +
+                                expand = expansion(mult = c(0.05, 0.18))) +
     geom_hline(yintercept = 0) +
     labs(x="", y="") +
-    theme(axis.text.x = ggplot2::element_text(vjust=6))
+    coord_cartesian(clip = "off") +
+    theme(axis.text.x = ggplot2::element_text(vjust=6),
+          panel.grid.major.x = ggplot2::element_blank(),
+          panel.grid.minor.x = ggplot2::element_blank(),
+          plot.margin = ggplot2::margin(t = 18, r = 10, b = 10, l = 10))
 }
-
-
